@@ -5,7 +5,7 @@
 
 // imports
 const AuthenticationController = require("./controllers/authController")
-const ContactController = require("./controllers/ContactController")
+const ContactController = require("./controllers/contactController")
 const express = require("express")
 const MessageController = require("./controllers/messageController")
 const passport = require("passport")

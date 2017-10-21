@@ -4,7 +4,7 @@
 "use strict"
 
 // imports
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt-nodejs")
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
