@@ -34,6 +34,7 @@ module.exports = (server) => {
     // message routes
     apiRoutes.use("/message", messageRoutes)
     messageRoutes.get("/all", requireAuth, MessageController.all)
+    messageRoutes.get("/filter/:userId", requireAuth, MessageController.filter)
     messageRoutes.post("/send", requireAuth, MessageController.send)
 
     // user routes

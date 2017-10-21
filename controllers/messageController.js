@@ -19,6 +19,36 @@ exports.all = (req, res) => {
     })
 }
 
+// filter route
+exports.filter = (req, res) => {
+    const userId = req.params.userId
+
+    // check missing input
+    if (!userId)
+        return res.status(400).send({ "error": "Missing user." })
+
+    // check recipient
+    User.findById(userId, (error, user) => {
+        if (error)
+            return res.status(400).send({ "error": "Unknown user." })
+
+        // query
+        Message.find({
+                    $or: [
+                        { $and: [{ recipient: req.user._id }, { sender: userId }] },
+                        { $and: [{ recipient: userId }, { sender: req.user._id }] }
+                    ]
+                })
+                .populate("recipient", "username")
+                .populate("sender", "username")
+                .exec((error, message) => {
+            if (error)
+                return res.send(error)
+            res.status(200).json({ messages: message })
+        })
+    })
+}
+
 // send route
 exports.send = (req, res) => {
     const recipientId = req.body.recipient

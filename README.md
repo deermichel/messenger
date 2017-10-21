@@ -93,6 +93,26 @@ Returns all messages sent by **and** to you.
 }
 ```
 
+#### GET `/message/filter/<userId>`
+Returns messages sent between you and the specified user.
+```json
+// response (if succeeded, status = 200)
+{
+    "messages": [
+        {
+            "recipient": "<userObject>",
+            "sender": "<userObject>",
+            "message": "hello world!",
+            "timestamp": "2017-10-20 19:47:27.870Z",
+            "id": "<messageId>"
+        },
+        {
+            "..."
+        }
+    ]
+}
+```
+
 #### POST `/message/send`
 Sends a message to another user.
 ```json
