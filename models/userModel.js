@@ -40,32 +40,13 @@ UserSchema.methods.checkPassword = function(password, callback) {
     })
 }
 
-// create user object (only public fields)
-UserSchema.methods.getPublicUserObject = function() {
-    let user = this.toObject()
-    return {
-        username: user.username,
-        id: user._id
-    }
-}
-
-// create user object (including private fields)
-UserSchema.methods.getPrivateUserObject = function() {
-    let user = this.toObject()
-    return {
-        mail: user.mail,
-        username: user.username,
-        id: user._id,
-        contacts: this.contacts
-    }
-}
-
-// transform for client
+// JSON formatter
 UserSchema.set("toJSON", {
-    transform: function(doc, ret, options) {
+    transform: (doc, ret, options) => {
         ret.id = ret._id
         delete ret.__v
         delete ret._id
+        delete ret.password
         delete ret.updated_at
         delete ret.created_at
     }

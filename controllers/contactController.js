@@ -32,13 +32,20 @@ exports.add = (req, res) => {
 
         // add user to contacts
         let user = req.user
-        console.log(user)
         if (!user.contacts.find((id) => id == userId))
             user.contacts.push(userId)
         user.save((error, user) => {
             if (error)
                 return res.send(error)
-            res.status(201).json({ contacts: user.contacts })
+
+            // populate all contacts
+            User.findById(user._id)
+                    .populate("contacts", "username")
+                    .exec((error, user) => {
+                if (error)
+                    return res.send(error)
+                res.status(201).json({ contacts: user.contacts })
+            })
         })
     })
 }

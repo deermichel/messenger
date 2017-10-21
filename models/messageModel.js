@@ -17,9 +17,9 @@ const MessageSchema = new Schema({
     timestamps: { createdAt: "created_at", updatedAt: "updated_at" }
 })
 
-// transform for client
+// JSON formatter
 MessageSchema.set("toJSON", {
-    transform: function(doc, ret, options) {
+    transform: (doc, ret, options) => {
         ret.id = ret._id
         delete ret.__v
         delete ret._id

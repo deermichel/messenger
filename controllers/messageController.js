@@ -41,10 +41,16 @@ exports.send = (req, res) => {
         message.save((error, message) => {
             if (error)
                 return res.send(error)
-            message = message.toJSON()
-            message.recipient = recipient.getPublicUserObject()
-            message.sender = req.user.getPublicUserObject()
-            res.status(201).json(message)
+
+            // populate
+            Message.findById(message._id)
+                    .populate("recipient", "username")
+                    .populate("sender", "username")
+                    .exec((error, message) => {
+                if (error)
+                    return res.send(error)
+                res.status(201).json(message)
+            })
         })
     })
 }

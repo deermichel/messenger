@@ -13,6 +13,6 @@ exports.me = (req, res) => {
             .exec((error, user) => {
         if (error)
             return res.send(error)
-        res.status(200).json(user.getPrivateUserObject())
+        res.status(200).json(user)
     })
 }
