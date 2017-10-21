@@ -24,7 +24,8 @@ const setUserInfo = (request) => {
 exports.login = (req, res, next) => {
     let userInfo = setUserInfo(req.user)
     res.status(200).json({
-        token: generateToken(userInfo)
+        token: generateToken(userInfo),
+        user: req.user.getUserObject()
     })
 }
 
@@ -68,7 +69,8 @@ exports.register = (req, res, next) => {
                     return next(error)
                 let userInfo = setUserInfo(user)
                 res.status(201).json({
-                    token: generateToken(userInfo)
+                    token: generateToken(userInfo),
+                    user: user.getUserObject()
                 })
             })
         })

@@ -38,5 +38,26 @@ UserSchema.methods.checkPassword = function(password, callback) {
     })
 }
 
+// create user object (for client)
+UserSchema.methods.getUserObject = function() {
+    let user = this.toObject()
+    return {
+        mail: user.mail,
+        username: user.username,
+        id: user._id
+    }
+}
+
+// transform for client
+UserSchema.set("toJSON", {
+    transform: function(doc, ret, options) {
+        ret.id = ret._id
+        delete ret.__v
+        delete ret._id
+        delete ret.updated_at
+        delete ret.created_at
+    }
+})
+
 // exports
 module.exports = mongoose.model("User", UserSchema)

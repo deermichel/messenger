@@ -8,6 +8,7 @@ const AuthenticationController = require("./controllers/authController")
 const express = require("express")
 const MessageController = require("./controllers/messageController")
 const passport = require("passport")
+const UserController = require("./controllers/userController")
 
 // setup passport middleware
 const passportConfig = require("./config/passport")
@@ -20,6 +21,7 @@ module.exports = (server) => {
     const apiRoutes = express.Router()
     const authRoutes = express.Router()
     const messageRoutes = express.Router()
+    const userRoutes = express.Router()
 
     // auth routes
     apiRoutes.use("/auth", authRoutes)
@@ -32,11 +34,9 @@ module.exports = (server) => {
     messageRoutes.get("/all", requireAuth, MessageController.all)
     messageRoutes.post("/send", requireAuth, MessageController.send)
 
-    // normal routes
-    apiRoutes.get("/", requireAuth, (req, res) => {
-        console.log(req.user)
-        res.send("Nice! ID:" + req.user._id + " Username:" + req.user.username)
-    })
+    // user routes
+    apiRoutes.use("/user", userRoutes)
+    userRoutes.get("/me", requireAuth, UserController.me)
 
     // set url for group routes
     server.use("/api/v1", apiRoutes)

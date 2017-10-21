@@ -9,7 +9,10 @@ const User = require("../models/userModel")
 
 // get all route
 exports.all = (req, res) => {
-    Message.find({}, (error, message) => {
+    Message.find({})
+            .populate("recipient", "username")
+            .populate("sender", "username")
+            .exec((error, message) => {
         if (error)
             return res.send(error)
         res.status(200).json(message)

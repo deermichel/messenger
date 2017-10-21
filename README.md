@@ -24,7 +24,8 @@ Registers a new user.
 
 // response (if succeeded, status = 201)
 {
-    "token": "Asdf...XX23"
+    "token": "Asdf...XX23",
+    "user": "<userObject>"
 }
 ```
 
@@ -39,7 +40,8 @@ Logs an user in.
 
 // response (if succeeded, status = 200)
 {
-    "token": "Asdf...XX23"
+    "token": "Asdf...XX23",
+    "user": "<userObject>"
 }
 ```
 
@@ -72,8 +74,8 @@ Returns all messages sent by **and** to you.
 {
     "messages": [
         {
-            "recipient": "<userId>",
-            "sender": "<userId>",
+            "recipient": "<userObject>",
+            "sender": "<userObject>",
             "message": "hello world!",
             "timestamp": "2017-10-20 19:47:27.870Z",
             "id": "<messageId>"
