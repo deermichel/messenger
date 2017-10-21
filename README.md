@@ -7,6 +7,7 @@ base URL: `https://api.....com`
 * [Authentication](#authentication)
 * [Users](#users)
 * [Messages](#messages)
+* [Contacts](#contacts)
 
 ## Endpoints
 
@@ -98,6 +99,8 @@ Sends a message to another user.
 
 // response (if succeeded, status = 201)
 {
-
+    "message": "<messageObject>"
 }
 ```
+
+### Contacts

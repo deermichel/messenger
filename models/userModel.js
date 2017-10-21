@@ -39,10 +39,10 @@ UserSchema.methods.checkPassword = function(password, callback) {
 }
 
 // create user object (for client)
-UserSchema.methods.getUserObject = function() {
+UserSchema.methods.getUserObject = function(withMail) {
     let user = this.toObject()
     return {
-        mail: user.mail,
+        mail: (withMail) ? user.mail : undefined,
         username: user.username,
         id: user._id
     }

@@ -41,6 +41,9 @@ exports.send = (req, res) => {
         message.save((error, message) => {
             if (error)
                 return res.send(error)
+            message = message.toJSON()
+            message.recipient = recipient.getUserObject()
+            message.sender = req.user.getUserObject()
             res.status(201).json(message)
         })
     })
