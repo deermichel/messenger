@@ -6,12 +6,14 @@
 // imports
 const bcrypt = require("bcrypt")
 const mongoose = require("mongoose")
+const Schema = mongoose.Schema
 
 // user schema
-const UserSchema = new mongoose.Schema({
+const UserSchema = new Schema({
     mail: { type: String, unique: true, required: true, trim: true },
     username: { type: String, unique: true, required: true, trim: true },
-    password: { type: String, required: true }
+    password: { type: String, required: true },
+    contacts: [{ type: Schema.Types.ObjectId, ref: "User" }]
 }, {
     timestamps: { createdAt: "created_at", updatedAt: "updated_at" }
 })
@@ -38,13 +40,23 @@ UserSchema.methods.checkPassword = function(password, callback) {
     })
 }
 
-// create user object (for client)
-UserSchema.methods.getUserObject = function(withMail) {
+// create user object (only public fields)
+UserSchema.methods.getPublicUserObject = function() {
     let user = this.toObject()
     return {
-        mail: (withMail) ? user.mail : undefined,
         username: user.username,
         id: user._id
+    }
+}
+
+// create user object (including private fields)
+UserSchema.methods.getPrivateUserObject = function() {
+    let user = this.toObject()
+    return {
+        mail: user.mail,
+        username: user.username,
+        id: user._id,
+        contacts: user.contacts
     }
 }
 

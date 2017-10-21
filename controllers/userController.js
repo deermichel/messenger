@@ -11,6 +11,6 @@ exports.me = (req, res) => {
     User.findById(req.user._id, (error, user) => {
         if (error)
             return res.send(error)
-        res.status(200).json(user.getUserObject(true))
+        res.status(200).json(user.getPrivateUserObject(true))
     })
 }

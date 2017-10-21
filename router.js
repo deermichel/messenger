@@ -5,6 +5,7 @@
 
 // imports
 const AuthenticationController = require("./controllers/authController")
+const ContactController = require("./controllers/ContactController")
 const express = require("express")
 const MessageController = require("./controllers/messageController")
 const passport = require("passport")
@@ -20,6 +21,7 @@ module.exports = (server) => {
     // route groups
     const apiRoutes = express.Router()
     const authRoutes = express.Router()
+    const contactRoutes = express.Router()
     const messageRoutes = express.Router()
     const userRoutes = express.Router()
 
@@ -37,6 +39,11 @@ module.exports = (server) => {
     // user routes
     apiRoutes.use("/user", userRoutes)
     userRoutes.get("/me", requireAuth, UserController.me)
+
+    // contact routes
+    apiRoutes.use("/contact", contactRoutes)
+    contactRoutes.get("/all", requireAuth, ContactController.all)
+    contactRoutes.post("/add", requireAuth, ContactController.add)
 
     // set url for group routes
     server.use("/api/v1", apiRoutes)

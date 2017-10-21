@@ -9,13 +9,13 @@ const User = require("../models/userModel")
 
 // get all route
 exports.all = (req, res) => {
-    Message.find({})
+    Message.find()
             .populate("recipient", "username")
             .populate("sender", "username")
             .exec((error, message) => {
         if (error)
             return res.send(error)
-        res.status(200).json(message)
+        res.status(200).json({ messages: message })
     })
 }
 
@@ -42,8 +42,8 @@ exports.send = (req, res) => {
             if (error)
                 return res.send(error)
             message = message.toJSON()
-            message.recipient = recipient.getUserObject()
-            message.sender = req.user.getUserObject()
+            message.recipient = recipient.getPublicUserObject()
+            message.sender = req.user.getPublicUserObject()
             res.status(201).json(message)
         })
     })

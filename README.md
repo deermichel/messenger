@@ -62,7 +62,11 @@ Returns user object of the authenticated user.
 {
     "mail": "user@gmail.com",
     "username": "user123",
-    "id": "<userId>"
+    "id": "<userId>",
+    "contacts": [
+        "<userObject>",
+        "..."
+    ]
 }
 ```
 
@@ -104,3 +108,49 @@ Sends a message to another user.
 ```
 
 ### Contacts
+
+#### GET `/contact/all`
+Returns a list of all contacts.
+```json
+// response (if succeeded, status = 200)
+{
+    "contacts": [
+        "<userObject>",
+        "..."
+    ]
+}
+```
+
+#### POST `/contact/add`
+Adds a contact.
+```json
+// request parameters
+{
+    "user": "<userId>"
+}
+
+// response (if succeeded, status = 201)
+{
+    "contacts": [
+        "<userObject>",
+        "..."
+    ]
+}
+```
+
+#### POST `/contact/delete`
+Removes a contact.
+```json
+// request parameters
+{
+    "user": "<userId>"
+}
+
+// response (if succeeded, status = 200)
+{
+    "contacts": [
+        "<userObject>",
+        "..."
+    ]
+}
+```
