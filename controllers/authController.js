@@ -6,7 +6,7 @@
 // imports
 const config = require("../config/main")
 const jwt = require("jsonwebtoken")
-const User = require("../models/user")
+const User = require("../models/userModel")
 
 // generate token from user object
 const generateToken = (user) => {

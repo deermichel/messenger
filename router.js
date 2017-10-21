@@ -4,8 +4,9 @@
 "use strict"
 
 // imports
-const AuthenticationController = require("./controllers/authentication")
+const AuthenticationController = require("./controllers/authController")
 const express = require("express")
+const MessageController = require("./controllers/messageController")
 const passport = require("passport")
 
 // setup passport middleware
@@ -18,12 +19,18 @@ module.exports = (server) => {
     // route groups
     const apiRoutes = express.Router()
     const authRoutes = express.Router()
+    const messageRoutes = express.Router()
 
     // auth routes
-    apiRoutes.use("/", authRoutes)
+    apiRoutes.use("/auth", authRoutes)
     authRoutes.post("/register", AuthenticationController.register)
     authRoutes.post("/login", requireLogin, AuthenticationController.login)
     authRoutes.post("/logout", requireAuth, AuthenticationController.logout)
+
+    // message routes
+    apiRoutes.use("/message", messageRoutes)
+    messageRoutes.get("/all", requireAuth, MessageController.all)
+    messageRoutes.post("/send", requireAuth, MessageController.send)
 
     // normal routes
     apiRoutes.get("/", requireAuth, (req, res) => {
