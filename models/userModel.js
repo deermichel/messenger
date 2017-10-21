@@ -56,7 +56,7 @@ UserSchema.methods.getPrivateUserObject = function() {
         mail: user.mail,
         username: user.username,
         id: user._id,
-        contacts: user.contacts
+        contacts: this.contacts
     }
 }
 

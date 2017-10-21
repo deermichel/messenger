@@ -34,7 +34,9 @@ const jwtOptions = {
     secretOrKey: config.secret
 }
 const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
-    User.findById(payload._id, (error, user) => {
+    User.findById(payload._id)
+            .populate("contacts")
+            .exec((error, user) => {
         if (error)
             return done(error, false)
         if (user) {

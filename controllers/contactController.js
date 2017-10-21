@@ -32,6 +32,7 @@ exports.add = (req, res) => {
 
         // add user to contacts
         let user = req.user
+        console.log(user)
         if (!user.contacts.find((id) => id == userId))
             user.contacts.push(userId)
         user.save((error, user) => {
