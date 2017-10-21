@@ -44,6 +44,7 @@ module.exports = (server) => {
     apiRoutes.use("/contact", contactRoutes)
     contactRoutes.get("/all", requireAuth, ContactController.all)
     contactRoutes.post("/add", requireAuth, ContactController.add)
+    contactRoutes.post("/delete", requireAuth, ContactController.delete)
 
     // set url for group routes
     server.use("/api/v1", apiRoutes)
