@@ -9,7 +9,7 @@ const User = require("../models/userModel")
 
 // get all route
 exports.all = (req, res) => {
-    Message.find()
+    Message.find({ $or: [{ recipient: req.user._id }, { sender: req.user._id }] })
             .populate("recipient", "username")
             .populate("sender", "username")
             .exec((error, message) => {

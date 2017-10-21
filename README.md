@@ -1,7 +1,8 @@
 # messenger API reference
 
 ## General
-base URL: `https://api.....com`
+base URL: `https://...com/api/v1`  
+auth header: `Authorization: Bearer <token>`
 
 ## Overview
 * [Authentication](#authentication)
