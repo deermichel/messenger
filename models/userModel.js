@@ -23,7 +23,7 @@ UserSchema.pre("save", function(next) {
     let user = this
     if (!user.isModified("password"))
         return next()
-    bcrypt.hash(user.password, 10, null, (error, hash) => {
+    bcrypt.hash(user.password, null, null, (error, hash) => {
         if (error)
             return next(error)
         user.password = hash
