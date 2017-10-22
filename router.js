@@ -49,4 +49,9 @@ module.exports = (server) => {
 
     // set url for group routes
     server.use("/api/v1", apiRoutes)
+
+    // 404 catchall
+    server.use((req, res) => {
+        res.status(404).send({ error: req.originalUrl + " not found." })
+    })
 }
