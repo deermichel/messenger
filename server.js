@@ -7,6 +7,8 @@
 const bodyParser = require("body-parser")
 const config = require("./config/main")
 const express = require("express")
+const fs = require("fs")
+const https = require("https")
 const mongoose = require("mongoose")
 const morgan = require("morgan")
 const router = require("./router")
@@ -42,4 +44,11 @@ router(server)
 
 // start listening
 console.log("server is running on port", config.port)
-server.listen(config.port)
+if (config.ssl) {
+    https.createServer({
+        key: fs.readFileSync(config.sslKeyFile),
+        cert: fs.readFileSync(config.sslCertFile)
+    }, server).listen(config.port)
+} else {
+    server.listen(config.port)
+}
