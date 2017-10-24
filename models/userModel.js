@@ -10,10 +10,10 @@ const Schema = mongoose.Schema
 
 // user schema
 const UserSchema = new Schema({
-    mail: { type: String, unique: true, required: true, trim: true },
+    mail: { type: String, unique: true, required: true, trim: true, select: false },
     username: { type: String, unique: true, required: true, trim: true },
-    password: { type: String, required: true },
-    contacts: [{ type: Schema.Types.ObjectId, ref: "User" }]
+    password: { type: String, required: true, select: false },
+    contacts: { type: [{ type: Schema.Types.ObjectId, ref: "User" }], select: false }
 }, {
     timestamps: { createdAt: "created_at", updatedAt: "updated_at" }
 })

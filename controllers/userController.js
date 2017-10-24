@@ -8,8 +8,8 @@ const User = require("../models/userModel")
 
 // me route
 exports.me = (req, res) => {
-    User.findById(req.user._id)
-            .populate("contacts", "username")
+    User.findById(req.user._id, "+mail +contacts")
+            .populate("contacts")
             .exec((error, user) => {
         if (error)
             return res.send(error)
@@ -24,7 +24,7 @@ exports.search = (req, res) => {
     // check missing input
     if (!query)
         return res.status(400).send({ error: "Missing query." })
-    
+
     const regex = { $regex: req.query.q, $options: "i" }
     User.find({ $or: [{ username: regex }, { mail: regex }] })
             .exec((error, user) => {

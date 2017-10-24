@@ -9,7 +9,7 @@ const User = require("../models/userModel")
 // get all route
 exports.all = (req, res) => {
     User.findById(req.user._id)
-            .populate("contacts", "username")
+            .populate("contacts")
             .exec((error, user) => {
         if (error)
             return res.send(error)
@@ -40,7 +40,7 @@ exports.add = (req, res) => {
 
             // populate all contacts
             User.findById(user._id)
-                    .populate("contacts", "username")
+                    .populate("contacts")
                     .exec((error, user) => {
                 if (error)
                     return res.send(error)
@@ -67,7 +67,7 @@ exports.delete = (req, res) => {
 
         // populate all contacts
         User.findById(user._id)
-                .populate("contacts", "username")
+                .populate("contacts")
                 .exec((error, user) => {
             if (error)
                 return res.send(error)

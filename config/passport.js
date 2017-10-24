@@ -13,8 +13,8 @@ const User = require("../models/userModel")
 
 // setup local login strategy
 const localLogin = new LocalStrategy((username, password, done) => {
-    User.findOne({ username: username })
-            .populate("contacts", "username")
+    User.findOne({ username: username }, "+password +mail +contacts")
+            .populate("contacts")
             .exec((error, user) => {
         if (error)
             return done(error)
@@ -36,7 +36,7 @@ const jwtOptions = {
     secretOrKey: config.secret
 }
 const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
-    User.findById(payload._id)
+    User.findById(payload._id, "+mail +contacts")
             .exec((error, user) => {
         if (error)
             return done(error, false)

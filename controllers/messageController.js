@@ -10,8 +10,8 @@ const User = require("../models/userModel")
 // get all route
 exports.all = (req, res) => {
     Message.find({ $or: [{ recipient: req.user._id }, { sender: req.user._id }] })
-            .populate("recipient", "username")
-            .populate("sender", "username")
+            .populate("recipient")
+            .populate("sender")
             .exec((error, message) => {
         if (error)
             return res.send(error)
@@ -39,8 +39,8 @@ exports.filter = (req, res) => {
                         { $and: [{ recipient: userId }, { sender: req.user._id }] }
                     ]
                 })
-                .populate("recipient", "username")
-                .populate("sender", "username")
+                .populate("recipient")
+                .populate("sender")
                 .exec((error, message) => {
             if (error)
                 return res.send(error)
@@ -74,8 +74,8 @@ exports.send = (req, res) => {
 
             // populate
             Message.findById(message._id)
-                    .populate("recipient", "username")
-                    .populate("sender", "username")
+                    .populate("recipient")
+                    .populate("sender")
                     .exec((error, message) => {
                 if (error)
                     return res.send(error)
