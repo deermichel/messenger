@@ -40,6 +40,7 @@ module.exports = (server) => {
     // user routes
     apiRoutes.use("/user", userRoutes)
     userRoutes.get("/me", requireAuth, UserController.me)
+    userRoutes.get("/search", requireAuth, UserController.search)
 
     // contact routes
     apiRoutes.use("/contact", contactRoutes)

@@ -71,6 +71,18 @@ Returns user object of the authenticated user.
 }
 ```
 
+#### GET `/user/search?q=<urlEncodedString>`
+Returns a list of users whose mail _or_ username contains the queried string.
+```json
+// response (if succeeded, status = 200)
+{
+    "users": [
+        "<userObject>",
+        "..."
+    ]
+}
+```
+
 ### Messages
 
 #### GET `/message/all`
