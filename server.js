@@ -24,7 +24,7 @@ server.use(bodyParser.urlencoded({ extended: false }))
 server.use(bodyParser.json())
 
 // log requests to console
-server.use(morgan("dev"))
+server.use(morgan("combined"))
 
 // enable CORS for clients
 server.use((req, res, next) => {
