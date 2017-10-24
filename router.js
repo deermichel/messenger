@@ -17,7 +17,7 @@ const requireAuth = passport.authenticate("jwt", { session: false })
 const requireLogin = passport.authenticate("local", { session: false })
 
 // routing
-module.exports = (server) => {
+module.exports = (app) => {
     // route groups
     const apiRoutes = express.Router()
     const authRoutes = express.Router()
@@ -49,10 +49,10 @@ module.exports = (server) => {
     contactRoutes.post("/delete", requireAuth, ContactController.delete)
 
     // set url for group routes
-    server.use("/api/v1", apiRoutes)
+    app.use("/api/v1", apiRoutes)
 
     // 404 catchall
-    server.use((req, res) => {
+    app.use((req, res) => {
         res.status(404).send({ error: req.originalUrl + " not found." })
     })
 }
