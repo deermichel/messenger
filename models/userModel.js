@@ -13,7 +13,8 @@ const UserSchema = new Schema({
     mail: { type: String, unique: true, required: true, trim: true, select: false },
     username: { type: String, unique: true, required: true, trim: true },
     password: { type: String, required: true, select: false },
-    contacts: { type: [{ type: Schema.Types.ObjectId, ref: "User" }], select: false }
+    contacts: { type: [{ type: Schema.Types.ObjectId, ref: "User" }], select: false },
+    last_seen: { type: String, default: new Date().toISOString() }
 }, {
     timestamps: { createdAt: "created_at", updatedAt: "updated_at" }
 })

@@ -64,6 +64,7 @@ Returns user object of the authenticated user.
     "mail": "user@gmail.com",
     "username": "user123",
     "id": "<userId>",
+    "last_seen": "online <or> 2017-10-20T19:47:27.870Z",
     "contacts": [
         "<userObject>",
         "..."
@@ -95,7 +96,7 @@ Returns all messages sent by **and** to you.
             "recipient": "<userObject>",
             "sender": "<userObject>",
             "message": "hello world!",
-            "timestamp": "2017-10-20 19:47:27.870Z",
+            "timestamp": "2017-10-20T19:47:27.870Z",
             "id": "<messageId>"
         },
         {

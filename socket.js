@@ -14,18 +14,36 @@ let io = undefined
 
 // connect event
 const onConnect = (socket) => {
+    const userId = socket.request.user._id
     console.log(`[${new Date().toISOString()}] ${socket.request.connection.remoteAddress} connected to socket`)
 
     // events
     socket.on("disconnect", (reason) => onDisconnect(socket, reason))
 
     // map to user room
-    socket.join(socket.request.user._id)
+    socket.join(userId)
+
+    // update last seen
+    User.findByIdAndUpdate(userId, { last_seen: "online" }, (error, user) => {
+        if (error) {
+            console.log(`[${new Date().toISOString()}] error updating last seen of ${userId}`)
+        }
+    })
 }
 
 // disconnect event
 const onDisconnect = (socket, reason) => {
+    const userId = socket.request.user._id
     console.log(`[${new Date().toISOString()}] ${socket.request.connection.remoteAddress} disconnected from socket due to ${reason}`)
+
+    // all clients of user left -> update last seen
+    if (!io.sockets.adapter.rooms[userId]) {
+        User.findByIdAndUpdate(userId, { last_seen: new Date().toISOString() }, (error, user) => {
+            if (error) {
+                console.log(`[${new Date().toISOString()}] error updating last seen of ${userId}`)
+            }
+        })
+    }
 }
 
 // error event
