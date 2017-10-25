@@ -27,7 +27,7 @@ exports.add = (req, res) => {
 
     // check user
     User.findById(userId, (error, contact) => {
-        if (error)
+        if (error || !contact)
             return res.status(400).send({ "error": "Unknown user." })
 
         // add user to contacts

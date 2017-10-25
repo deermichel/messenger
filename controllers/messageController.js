@@ -5,6 +5,7 @@
 
 // imports
 const Message = require("../models/messageModel")
+const socket = require("../socket")
 const User = require("../models/userModel")
 
 // get all route
@@ -29,7 +30,7 @@ exports.filter = (req, res) => {
 
     // check recipient
     User.findById(userId, (error, user) => {
-        if (error)
+        if (error || !user)
             return res.status(400).send({ "error": "Unknown user." })
 
         // query
@@ -59,7 +60,7 @@ exports.send = (req, res) => {
 
     // check recipient
     User.findById(recipientId, (error, recipient) => {
-        if (error)
+        if (error || !recipient)
             return res.status(400).send({ "error": "Unknown recipient." })
 
         // create message
@@ -79,6 +80,7 @@ exports.send = (req, res) => {
                     .exec((error, message) => {
                 if (error)
                     return res.send(error)
+                socket.emitMessage(message)
                 res.status(201).json(message)
             })
         })

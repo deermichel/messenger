@@ -56,7 +56,7 @@ if (config.ssl) {
 router(app)
 
 // setup socket
-socket(server)
+socket.setup(server)
 
 // start listening
 console.log("server is running on port", config.port)

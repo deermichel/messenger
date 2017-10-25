@@ -34,7 +34,7 @@ const onError = (socket) => {
 }
 
 // setup
-module.exports = (server) => {
+exports.setup = (server) => {
     // bind and create
     console.log("socket is running")
     io = socketio(server)
@@ -56,4 +56,11 @@ module.exports = (server) => {
     // events
     io.on("connect", onConnect)
     io.on("error", onError)
+}
+
+// emit message
+exports.emitMessage = (message) => {
+    const senderId = message.sender._id
+    const recipientId = message.recipient._id
+    io.to(senderId).to(recipientId).emit("message", message)
 }
