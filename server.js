@@ -13,7 +13,7 @@ const https = require("https")
 const mongoose = require("mongoose")
 const morgan = require("morgan")
 const router = require("./router")
-// const socket = require("./socket")
+const socket = require("./socket")
 
 // setup express server
 const app = express()
@@ -56,7 +56,7 @@ if (config.ssl) {
 router(app)
 
 // setup socket
-// socket(server)
+socket(server)
 
 // start listening
 console.log("server is running on port", config.port)
