@@ -2,6 +2,7 @@
 
 ## General
 base URL: `https://...com/api/v1`  
+socket URL: `<baseUrl>?auth_token=<token>`  
 auth header: `Authorization: Bearer <token>`
 
 ## Overview
@@ -9,6 +10,7 @@ auth header: `Authorization: Bearer <token>`
 * [Users](#users)
 * [Messages](#messages)
 * [Contacts](#contacts)
+* [Sockets](#sockets)
 
 ## Endpoints
 
@@ -73,7 +75,7 @@ Returns user object of the authenticated user.
 ```
 
 #### GET `/user/search?q=<urlEncodedString>`
-Returns a list of users whose mail _or_ username contains the queried string.
+Returns a list of users whose mail **or** username contains the queried string.
 ```json
 // response (if succeeded, status = 200)
 {
@@ -187,4 +189,44 @@ Removes a contact.
         "..."
     ]
 }
+```
+
+### Sockets
+Using socket.io as socket service.
+
+#### How to connect
+_Example for js socket.io library:_
+```javascript
+let socket = io.connect("<baseUrl>", {
+    query: "auth_token=" + "<token>"
+})
+```
+
+#### ON `connect`
+Fired if authentication went right and everything is just waiting for
+your awesome messages.  
+_Example for js socket.io library:_
+```javascript
+socket.on("connect", () => {
+    // connected
+})
+```
+
+#### ON `error`
+Well, go and fix it. Mostly caused by authentication problems (e.g. token expired).  
+_Example for js socket.io library:_
+```javascript
+socket.on("error", (error) => {
+    // console.log(error)
+})
+```
+
+#### ON `message`
+Listens to new messages which will be sent as a socket event to the recipient
+**and** the sender.  
+_Example for js socket.io library:_
+```javascript
+socket.on("message", (message) => {
+    // message is a <messageObject>
+})
 ```
