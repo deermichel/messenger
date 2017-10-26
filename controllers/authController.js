@@ -48,6 +48,10 @@ exports.register = (req, res, next) => {
     if (!password)
         return res.status(400).send({ error: "Missing password." })
 
+    // check username
+    if (!/^[a-zA-Z0-9-_]+$/.test(username))
+        return res.status(400).send({ error: "Username not matching '[a-zA-Z0-9-_]+'." })
+
     // check unique mail
     User.findOne({ mail }, (error, existingUser) => {
         if (error)

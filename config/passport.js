@@ -14,7 +14,7 @@ const User = require("../models/userModel")
 // setup local login strategy
 const localLogin = new LocalStrategy((username, password, done) => {
     User.findOne({ $or: [{ username: username }, { mail: username }] },
-              "+password +mail +contacts")
+                "+password +mail +contacts")
             .populate("contacts")
             .exec((error, user) => {
         if (error)
