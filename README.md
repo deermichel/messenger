@@ -39,7 +39,7 @@ Logs an user in.
 // request parameters
 {
     "password": "<sha512-encrypted password.domain>",
-    "username": "user123"
+    "username": "user123 <or> user@gmail.com"
 }
 
 // response (if succeeded, status = 200)
