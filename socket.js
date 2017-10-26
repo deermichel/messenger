@@ -20,15 +20,19 @@ const onConnect = (socket) => {
     // events
     socket.on("disconnect", (reason) => onDisconnect(socket, reason))
 
+    // update last seen on first client connect
+    if (!io.sockets.adapter.rooms[userId]) {
+        User.findByIdAndUpdate(userId, { last_seen: "online" }, { new: true }, (error, user) => {
+            if (error) {
+                console.log(`[${new Date().toISOString()}] error updating last seen of ${userId}`)
+            } else {
+                socket.broadcast.emit("user", user) // send user update
+            }
+        })
+    }
+
     // map to user room
     socket.join(userId)
-
-    // update last seen
-    User.findByIdAndUpdate(userId, { last_seen: "online" }, (error, user) => {
-        if (error) {
-            console.log(`[${new Date().toISOString()}] error updating last seen of ${userId}`)
-        }
-    })
 }
 
 // disconnect event
@@ -38,9 +42,11 @@ const onDisconnect = (socket, reason) => {
 
     // all clients of user left -> update last seen
     if (!io.sockets.adapter.rooms[userId]) {
-        User.findByIdAndUpdate(userId, { last_seen: new Date().toISOString() }, (error, user) => {
+        User.findByIdAndUpdate(userId, { last_seen: new Date().toISOString() }, { new: true }, (error, user) => {
             if (error) {
                 console.log(`[${new Date().toISOString()}] error updating last seen of ${userId}`)
+            } else {
+                io.emit("user", user) // send user update
             }
         })
     }

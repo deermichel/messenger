@@ -23,7 +23,7 @@ Registers a new user.
 {
     "mail": "user@gmail.com",
     "password": "<sha512-encrypted password.domain>",
-    "username": "user123"
+    "username": "user123 <format: [a-zA-Z0-9-_]+>"
 }
 
 // response (if succeeded, status = 201)
