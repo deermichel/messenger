@@ -23,7 +23,7 @@ Registers a new user.
 {
     "mail": "user@gmail.com",
     "password": "<sha512-encrypted password.domain>",
-    "username": "user123"
+    "username": "user123 <format: [a-zA-Z0-9-_]+>"
 }
 
 // response (if succeeded, status = 201)
@@ -39,7 +39,7 @@ Logs an user in.
 // request parameters
 {
     "password": "<sha512-encrypted password.domain>",
-    "username": "user123"
+    "username": "user123 <or> user@gmail.com"
 }
 
 // response (if succeeded, status = 200)
@@ -212,6 +212,16 @@ socket.on("connect", () => {
 })
 ```
 
+#### ON `disconnect`
+Fired if client disconnected from server. Mostly caused by a network timeout or
+if the server is down.  
+_Example for js socket.io library:_
+```javascript
+socket.on("disconnect", (reason) => {
+    // console.log(reason)
+})
+```
+
 #### ON `error`
 Well, go and fix it. Mostly caused by authentication problems (e.g. token expired).  
 _Example for js socket.io library:_
@@ -228,5 +238,15 @@ _Example for js socket.io library:_
 ```javascript
 socket.on("message", (message) => {
     // message is a <messageObject>
+})
+```
+
+#### ON `user`
+Listens to user events (e.g. updated last_seen) which will be sent as a socket
+event to all connected sockets.  
+_Example for js socket.io library:_
+```javascript
+socket.on("user", (user) => {
+    // user is a <userObject>
 })
 ```
