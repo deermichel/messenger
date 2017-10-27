@@ -4,6 +4,7 @@
 "use strict"
 
 // imports
+const Conversation = require("./conversationModel")
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
@@ -15,6 +16,33 @@ const MessageSchema = new Schema({
     timestamp: { type: Date, default: Date.now }
 }, {
     timestamps: { createdAt: "created_at", updatedAt: "updated_at" }
+})
+
+// add prehook to update conversations
+MessageSchema.pre("save", function(next) {
+    const message = this
+    Conversation.findOneAndUpdate(
+        { participants: { $all: [message.sender, message.recipient] } },
+        { $addToSet: { messages: message._id } },
+        { upsert: false, new: true, setDefaultsOnInsert: true },
+                (error, conversation) => {
+            if (error)
+                return next(error)
+
+            // workaround till upsert BUG is fixed!
+            if (!conversation) {
+                conversation = new Conversation({
+                    participants: [message.sender, message.recipient],
+                    messages: [message._id]
+                }).save((error, conversation) => {
+                    if (error)
+                        return next(error)
+                    next()
+                })
+            }
+
+            next()
+        })
 })
 
 // JSON formatter
