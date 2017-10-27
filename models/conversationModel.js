@@ -11,6 +11,7 @@ const Schema = mongoose.Schema
 const ConversationSchema = new Schema({
     participants: { type: [{ type: Schema.Types.ObjectId, ref: "User" }] },
     messages: { type: [{ type: Schema.Types.ObjectId, ref: "Message" }] },
+    last_message: { type: Schema.Types.ObjectId, ref: "Message" }
 }, {
     timestamps: { createdAt: "created_at", updatedAt: "updated_at" }
 })
