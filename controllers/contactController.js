@@ -14,18 +14,7 @@ exports.all = (req, res) => {
             .exec((error, user) => {
         if (error)
             return res.send(error)
-
-        let contacts = user.contacts
-
-        // fetch last messages
-        Conversation.find({ participants: req.user._id })
-                .populate("last_message")
-                .exec((error, conversation) => {
-            if (error)
-                return res.send(error)
-        })
-
-        res.status(200).json({ contacts })
+        res.status(200).json({ contacts: user.contacts })
     })
 }
 

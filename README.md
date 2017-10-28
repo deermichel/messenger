@@ -9,6 +9,7 @@ auth header: `Authorization: Bearer <token>`
 * [Authentication](#authentication)
 * [Users](#users)
 * [Messages](#messages)
+* [Conversations](#conversations)
 * [Contacts](#contacts)
 * [Sockets](#sockets)
 
@@ -140,6 +141,39 @@ Sends a message to another user.
 // response (if succeeded, status = 201)
 {
     "message": "<messageObject>"
+}
+```
+
+### Conversations
+
+#### GET `/conversation/with/<userId>`
+Returns the conversation between you and the specified user. If no such
+conversation exists (e.g. among cs students), returns **null**.
+```json
+// response (if succeeded, status = 200)
+{
+    "messages": [
+        "<messageObject>",
+        "..."
+    ],
+    "participants": [
+        "<userObject>",
+        "..."
+    ],
+    "last_message": "<messageObject>",
+    "id": "<conversationId>"
+}
+```
+
+#### GET `/conversation/all`
+Returns all conversations featuring you.
+```json
+// response (if succeeded, status = 200)
+{
+    "conversations": [
+        "<conversationObject>",
+        "..."
+    ]
 }
 ```
 
